@@ -22,7 +22,6 @@ public class UserController {
 
     @Autowired
     public UserController(UserService userService) {
-
         this.userService = userService;
     }
 
@@ -34,8 +33,8 @@ public class UserController {
 
 //    tìm kiếm thông tin người dùng theo id
     @GetMapping("api/v1/users/{userId}")
-    public UserDto findById(@PathVariable("userId") Long id) {
-        return userService.findById(id);
+    public UserDto findById(@PathVariable("userId") Long userId) {
+        return userService.findById(userId);
     }
 
 //    tạo người dùng
@@ -43,19 +42,19 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto create(@RequestBody CreateUserForm form) {
         return userService.create(form) ;
-
     }
 
 // cập nhật thông tin người dùng theo id
-    @PutMapping("api/v1/users/{id}")
-    public UserDto update(@PathVariable("id") Long id,@RequestBody UpdateUserForm form) {
-        return userService.update(id, form);
+    @PutMapping("api/v1/users/{userId}")
+    public UserDto update(@PathVariable("userId") Long userId,@RequestBody UpdateUserForm form) {
+        return userService.update(userId, form);
     }
+
 // xóa người  dùng theo id
-    @DeleteMapping("/api/v1/users/{id}")
+    @DeleteMapping("/api/v1/users/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteById(@PathVariable("id") Long id) {
-        userService.delete(id);
+    public void deleteById(@PathVariable("userId") Long userId) {
+        userService.delete(userId);
     }
 
 }
