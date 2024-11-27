@@ -5,7 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CreateDoctorForm extends CreateUserForm{
+public class CreateDoctorForm {
+    private Long userId;
     private String specialization;
     private int experienceYears;
     private String education;

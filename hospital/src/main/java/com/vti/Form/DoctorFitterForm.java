@@ -7,5 +7,6 @@ import lombok.Setter;
 @Setter
 
 public class DoctorFitterForm {
-    private String fullName;
+
+  private String fullName;
 }
