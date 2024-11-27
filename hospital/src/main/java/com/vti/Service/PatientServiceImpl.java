@@ -41,6 +41,14 @@ public class PatientServiceImpl implements PatientService {
         Patient savedPatient = patientRepository.save(patient);
         return modelMapper.map(savedPatient, PatientDto.class);
     }
+    @Override
+    public PatientDto updatePatient(Long userId, UpdatePatientForm form) {
+        User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("User not found"));
+        Patient patient = modelMapper.map(form, Patient.class);
+        patient.setUser(user);
+     Patient savedPatient = patientRepository.save(patient);
+     return modelMapper.map(savedPatient,PatientDto.class);
+    }
 
     @Override
     public Page<PatientDto> findAll(Pageable pageable) {
@@ -48,10 +56,6 @@ public class PatientServiceImpl implements PatientService {
                 .map(patient -> modelMapper.map(patient,PatientDto.class));
     }
 
-    @Override
-    public PatientDto findById(Long patientId) {
-        return patientRepository.findById(patientId).map(patient -> modelMapper.map(patient,PatientDto.class)).orElse(null);
-    }
 
     @Override
     public Page<PatientDto> findByFullName(String fullName, Pageable pageable) {
@@ -59,14 +63,6 @@ public class PatientServiceImpl implements PatientService {
                 .map(patient -> modelMapper.map(patient,PatientDto.class));
     }
 
-    @Override
-    public PatientDto updatePatient(Long userId, UpdatePatientForm form) {
-        User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("User not found"));
-        Patient patient = patientRepository.findByUser(user).orElseThrow(()-> new RuntimeException("User not found"));
-        modelMapper.map(form,patient);
-     Patient savedPatient = patientRepository.save(patient);
-     return modelMapper.map(savedPatient,PatientDto.class);
-    }
 
     @Override
     public void deletePatient(Long patientId) {
@@ -103,5 +99,9 @@ public class PatientServiceImpl implements PatientService {
                     return patientWithUser;
                 })
                 .collect(Collectors.toList());
+    }
+    @Override
+    public PatientDto findById(Long patientId) {
+        return patientRepository.findById(patientId).map(patient -> modelMapper.map(patient,PatientDto.class)).orElse(null);
     }
 }

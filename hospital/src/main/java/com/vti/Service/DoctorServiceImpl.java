@@ -79,14 +79,13 @@ public DoctorDto createDoctor(Long userId, CreateDoctorForm form) {
 //        return modelMapper.map(savedDoctor, DoctorDto.class);
 //    }
 
-
 //    sửa thông tin của doctor
 @Override
 public DoctorDto updateDoctor(Long userId, UpdateDoctorForm form) {
     User user = userRepository.findById(userId)
             .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
-    Doctor doctor = doctorRepository.findByUser(user).orElseThrow(() -> new RuntimeException("User not found"));
-    modelMapper.map(form, doctor);
+    Doctor doctor = modelMapper.map(form, Doctor.class);
+    doctor.setUser(user);
     Doctor savedDoctor = doctorRepository.save(doctor);
     return modelMapper.map(savedDoctor, DoctorDto.class);
 }

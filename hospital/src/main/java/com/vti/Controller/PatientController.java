@@ -48,7 +48,10 @@ public class PatientController {
     @PostMapping("api/v1/user/{userId}/patients")
     public PatientDto createPatient(@PathVariable("userId") Long userId, @RequestBody CreatePatientForm form) {
         return patientService.createPatient(userId,form);
-
+    }
+    @PutMapping("api/v1/user/{userId}/patients")
+    public PatientDto update(@PathVariable("userId") Long userId, @RequestBody UpdatePatientForm form) {
+        return patientService.updatePatient(userId,form);
     }
 
 //    in ra list benh nhan day du thong tin
@@ -76,10 +79,6 @@ public class PatientController {
 
 //    ------------ không dùng đến----------------
 // sua thong tin benh nhan
-    @PutMapping("api/v1/user/{userId}/patients")
-    public PatientDto update(@PathVariable("id") Long id, @RequestBody UpdatePatientForm form) {
-        return patientService.updatePatient(id,form);
-    }
 //    xoa thong tin benh nhan
     @DeleteMapping("api/v1/patients/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
